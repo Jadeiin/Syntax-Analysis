@@ -83,3 +83,38 @@ class FA:
         fa.edge('', 'I0')
 
         fa.view()
+
+    def writeSimplePlantUML(self, fname, pst):
+        with open(fname, 'w', encoding='utf-8') as f:
+            f.write('@startuml\n\n')
+            # write edge
+            for fromstate, tostates in self.transitions.items():
+                for state in tostates:
+                    f.write('I' + str(fromstate) + ' --> I' + str(state) + ' : ' + list(tostates[state])[0] + '\n')
+            f.write('\n')
+            # write node
+            for state in self.states:
+                head = 'I' + str(state) + ': '
+                for pj in pst[state]:
+                    f.write(head + pj[0] + arrow + pj[1] + '\n')
+                f.write('\n')
+            f.write('@enduml')
+
+    def writePlantUML(self, fname, pst, LATerminal):
+        with open(fname, 'w', encoding='utf-8') as f:
+            f.write('@startuml\n\n')
+            # write edge
+            for fromstate, tostates in self.transitions.items():
+                for state in tostates:
+                    f.write('I' + str(fromstate) + ' --> I' + str(state) + ' : ' + list(tostates[state])[0] + '\n')
+            f.write('\n')
+            # write node
+            for state in self.states:
+                head = 'I' + str(state) + ': '
+                for pj in pst[state]:
+                    tmp = ' '
+                    for sy in LATerminal[state][(pj[0], pj[1])]:
+                        tmp += sy + '/'
+                    f.write(head + pj[0] + arrow + pj[1] + comma + tmp[:-1] + '\n')
+                f.write('\n')
+            f.write('@enduml')

@@ -22,11 +22,13 @@ if __name__ == '__main__':
     a.BuildSimpleDFA()
     if a.BuildLR0AnalyseTable():
         a.dfa.displaySimpleSquare('simpledfa.gv', 'simple_dfa', a.projectSet)
+        a.dfa.writeSimplePlantUML('simpledfa.puml', a.projectSet)
         syntaxAnalysis(a)
     elif a.BuildSLR1AnalyseTable():
         syntaxAnalysis(a)
     else:
         a.BuildDFA()
         a.dfa.displaySquare('dfa.gv', 'dfa_with_lookahead', a.projectSet, a.LATerminal)
+        a.dfa.writePlantUML('dfa.puml', a.projectSet, a.LATerminal)
         if a.BuildLR1AnalyseTable():
             syntaxAnalysis(a)
