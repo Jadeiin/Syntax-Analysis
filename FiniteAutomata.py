@@ -1,4 +1,3 @@
-from graphviz import Digraph, render
 from collections import defaultdict
 
 Upper = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
@@ -35,6 +34,11 @@ class FA:
             self.transitions[fromstate][tostate] = inputch
 
     def displaySimpleSquare(self, fname, pname, pst):   # do not contain lookahead terminals
+        try:
+            from graphviz import Digraph
+        except:
+            print('Please install graphviz first if you want to display DFA')
+            return
         fa = Digraph(pname, filename = fname, format = 'png')
         fa.attr(rankdir='LR')
 
@@ -57,6 +61,11 @@ class FA:
         fa.view()
 
     def displaySquare(self, fname, pname, pst, LATerminal):
+        try:
+            from graphviz import Digraph
+        except:
+            print('Please install graphviz first if you want to display DFA')
+            return
         fa = Digraph(pname, filename = fname, format = 'png')
         fa.attr(rankdir='LR')
 
@@ -86,7 +95,7 @@ class FA:
 
     def writeSimplePlantUML(self, fname, pst):
         with open(fname, 'w', encoding='utf-8') as f:
-            f.write('@startuml\n\n')
+            f.write('@startuml\nleft to right direction\n[*] --> I0\n')
             # write edge
             for fromstate, tostates in self.transitions.items():
                 for state in tostates:
@@ -102,7 +111,7 @@ class FA:
 
     def writePlantUML(self, fname, pst, LATerminal):
         with open(fname, 'w', encoding='utf-8') as f:
-            f.write('@startuml\n\n')
+            f.write('@startuml\nleft to right direction\n[*] --> I0\n')
             # write edge
             for fromstate, tostates in self.transitions.items():
                 for state in tostates:

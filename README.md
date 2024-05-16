@@ -10,7 +10,7 @@
 ### Requirements
 
 - Python 3
-- python-graphviz
+- python-graphviz (optional)
   - Users can install it by running `pip install graphviz`
 
 ### DFA Sample Generation
